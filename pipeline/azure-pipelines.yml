@@ -1,0 +1,65 @@
+trigger:
+- main
+
+variables:
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: ScanCode
+  displayName: Scan Code stage
+  jobs:
+  - job: ScanCode
+    displayName: Scan Code
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+      - script: |
+          npm i mega-linter-runner
+        displayName: 'Instalar package MegaLinter localmente'
+      - script: |
+          cd ./src
+          npx mega-linter-runner --flavor dotnet \
+            -e "'ENABLE_LINTERS=CSHARP_ROSLYNATOR,REPOSITORY_GITLEAKS,REPOSITORY_SEMGREP'" \
+            -e 'SARIF_REPORTER=true' \
+            -e 'SHOW_ELAPSED_TIME=true' \
+            -e "'REPOSITORY_SEMGREP_RULESETS=p/dockerfile,p/owasp-top-ten'"
+        displayName: 'Executar MegaLinter via npx'
+      - script: docker ps -a
+        displayName: 'Exibir containers apos execucao do MegaLinter'
+        condition: always()
+      - script: docker images
+        displayName: 'Exibir imagens apos execucao do MegaLinter'
+        condition: always()
+      - script: |
+          cd ./src
+          pwd
+          echo
+          ls -l
+          echo
+          echo
+          cd ./megalinter-reports
+          pwd
+          echo
+          ls -l
+          echo
+          echo
+          cd ./linters_logs
+          pwd
+          echo
+          ls -l
+        displayName: 'Exibir relatorios gerados apos execucao do MegaLinter'
+        condition: always()
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.SourcesDirectory)/src/megalinter-reports/megalinter-report.sarif'
+          ArtifactName: 'CodeAnalysisLogs'
+          publishLocation: 'Container'
+        displayName: Publicacao de relatorio SARIF
+        condition: always()
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.SourcesDirectory)/src/megalinter-reports/'
+          ArtifactName: 'MegaLinterAnalysisLogs'
+          publishLocation: 'Container'
+        displayName: Publicacao de relatorio SARIF
+        condition: always()
