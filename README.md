@@ -42,3 +42,7 @@ Já em **Artifacts** teremos os seguintes arquivos:
 ![Resultados em Artifacts 1](img/pipeline-06.png)
 
 ![Resultados em Artifacts 2](img/pipeline-07.png)
+
+E no print a seguir temos os logs da análise do código **.NET/C#**:
+
+![Resultados da análise do código .NET/C#](img/pipeline-08.png)
