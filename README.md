@@ -33,6 +33,12 @@ Produzindo como resultados:
 
 Na seção **Scans** dos resultados do pipeline constarão os seguintes resultados (ao executar as ferramentas **gitleaks** e **Semgrep**):
 
-![Resultado na aba Scans 1](img/pipeline-04.png)
+![Resultados na aba Scans 1](img/pipeline-04.png)
 
-![Resultado na aba Scans 2](img/pipeline-05.png)
+![Resultados na aba Scans 2](img/pipeline-05.png)
+
+Já em **Artifacts** teremos os seguintes arquivos:
+
+![Resultados em Artifacts 1](img/pipeline-06.png)
+
+![Resultados em Artifacts 2](img/pipeline-07.png)
