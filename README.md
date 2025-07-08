@@ -30,3 +30,9 @@ docker run --platform linux/amd64 --rm -v /var/run/docker.sock:/var/run/docker.s
 Produzindo como resultados:
 
 ![Resultado no terminal](img/pipeline-03.png)
+
+Na seção **Scans** dos resultados do pipeline constarão os seguintes resultados (ao executar as ferramentas **gitleaks** e **Semgrep**):
+
+![Resultado na aba Scans 1](img/pipeline-04.png)
+
+![Resultado na aba Scans 2](img/pipeline-05.png)
